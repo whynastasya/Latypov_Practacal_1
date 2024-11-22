@@ -66,8 +66,6 @@ final class XMLFileManager: IFileManager {
         }
     }
     
-    // MARK: - Private Helpers
-    
     private func encodeXML(_ text: String) -> String {
         return text
             .replacingOccurrences(of: "&", with: "&amp;")
