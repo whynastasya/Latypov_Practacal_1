@@ -1,6 +1,7 @@
 import os
 import json
 import zipfile
+import re
 import xml.etree.ElementTree as ET
 import psutil 
 
@@ -37,6 +38,10 @@ class JSONFileManager(IFileManager):
         name = input("Введите имя пользователя: ")
         age = input("Введите возраст пользователя: ")
 
+        # Защита от инжектирования, например, убираем небезопасные символы
+        name = self.sanitize_input(name)
+        age = self.sanitize_input(age)
+
         print(f"Попытка создать файл: {file_name}") 
     
         try:
@@ -48,6 +53,10 @@ class JSONFileManager(IFileManager):
             print("Возраст должен быть числом.")
         except Exception as e:
             print(f"Ошибка при создании файла: {e}")
+
+    def sanitize_input(self, user_input: str) -> str:
+        # Убираем символы, которые могут быть использованы для инжектирования
+        return re.sub(r'[^\w\s]', '', user_input)  # Разрешаем только буквы, цифры и пробелы
 
     def read_file(self, file_name: str):
         try:
@@ -63,6 +72,7 @@ class JSONFileManager(IFileManager):
             print(f"JSON файл {file_name} успешно удален.")
         except FileNotFoundError:
             print("Файл не найден.")
+
 
 class TextFileManager(IFileManager):
     def create_file(self, file_name: str):
