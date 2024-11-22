@@ -10,22 +10,34 @@ import Foundation
 final class XMLFileManager: IFileManager {
     func createFile(withName fileName: String) {
         print("Введите имя пользователя:")
-            guard let name = readLine(), !name.isEmpty else {
-                print("Имя не может быть пустым.")
-                return
-            }
-
-            print("Введите возраст пользователя:")
-            guard let ageString = readLine(), let age = Int(ageString) else {
-                print("Возраст должен быть числом.")
-                return
-            }
-
-            let xmlString = """
+        guard let name = readLine(), !name.isEmpty else {
+            print("Имя не может быть пустым.")
+            return
+        }
+        
+        print("Введите возраст пользователя:")
+        guard let ageString = readLine(), let age = Int(ageString) else {
+            print("Возраст должен быть числом.")
+            return
+        }
+        
+        let safeName = name.replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&apos;")
+        
+        let safeAge = ageString.replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&apos;")
+        
+        let xmlString = """
             <?xml version="1.0" encoding="UTF-8"?>
             <user>
-                <name>\(name)</name>
-                <age>\(age)</age>
+                <name>\(safeName)</name>
+                <age>\(safeAge)</age>
             </user>
             """
         

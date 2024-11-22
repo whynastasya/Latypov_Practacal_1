@@ -23,8 +23,6 @@ final class JSONFileManager: IFileManager {
         
         let user = User(name: name, age: age)
         
-        
-        
         do {
             let jsonData = try JSONEncoder().encode(user)
             let jsonString = String(data: jsonData, encoding: .utf8)
