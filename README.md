@@ -42,3 +42,5 @@
 ## 6. Размер файлов
 
 ![Размер файлов](https://github.com/user-attachments/assets/36de6345-86ee-4679-b921-c5c3265ba291)
+
+Чтобы избежать уязвимостей, таких как XXE и инъекции, в Python я использовала ElementTree для безопасного парсинга XML и стандартный json для работы с JSON. В Swift экранировала символы в XML и использовала JSONEncoder/JSONDecoder для безопасной работы с JSON.
